@@ -75,8 +75,6 @@ class MetaCLI
       @name, @meth = name, meth
     end
 
-    attr_reader :meth
-
     def usage
       args = @meth.parameters.map do |type, name|
         case type
