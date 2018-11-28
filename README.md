@@ -3,7 +3,7 @@
 > Ruby command-line option parser for the lazy
 
 Instead of having to explicitly declare available commands and their arguments
-and options, dynamically interpolates those from regular method definitions.
+and options, dynamically extrapolates those from regular method definitions.
 Generates concise usage messages upon --help and invalid calls.
 
 Allows for defining commands as methods receiving command-line arguments and
