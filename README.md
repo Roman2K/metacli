@@ -9,6 +9,8 @@ Instead of having to explicitly declare available commands and their arguments
 and options, dynamically extrapolates those from regular method definitions.
 Generates concise usage messages upon --help and invalid calls.
 
+Command descriptions may be specified as method documentation.
+
 ## Example
 
 ```sh
@@ -44,6 +46,7 @@ class MyApp
     puts "Hello #{name}"
   end
 
+  # Prints its argument
   def cmd_echo(msg, shout: false)
     msg = msg.upcase if shout
     puts msg
@@ -73,7 +76,7 @@ Usage: my_script.rb hello|echo [options]
 Commands:
 
   hello firstname [lastname]
-  echo msg --shout
+  echo msg --shout · Prints its argument
 
 ```
 
@@ -82,6 +85,16 @@ Command usage:
 ```sh
 $ ruby my_script.rb hello -h
 Usage: my_script.rb hello firstname [lastname]
+```
+
+Command usage (with description):
+
+```sh
+$ ruby my_script.rb echo -h
+Usage: my_script.rb echo msg --shout
+
+   Prints its argument
+
 ```
 
 Successful run:

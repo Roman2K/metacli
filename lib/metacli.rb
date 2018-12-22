@@ -1,4 +1,6 @@
 class MetaCLI
+  autoload :MethodDoc, 'metacli/methoddoc'
+
   def initialize(argv, prog: File.basename($0))
     @prog, @args = prog, argv.dup
     @opt_help = %w(-h --help).map { |o| !!@args.delete(o) }.any?
@@ -34,7 +36,7 @@ class MetaCLI
       raise ArgumentError, msg unless @opt_help
       puts msg,
         "", "Commands:",
-        "", cmds.map { |c| "  " + runobj[c].usage },
+        "", cmds.map { |c| "  " + runobj[c].usage_short },
         ""
       exit 0
     end
@@ -48,7 +50,7 @@ class MetaCLI
     begin
       cmd.run(@args, @opts)
     rescue Command::CommandArgError
-      raise ArgumentError, usage(cmd.usage)
+      raise ArgumentError, usage(cmd.usage_args)
     end
   end
 
@@ -76,6 +78,20 @@ class MetaCLI
     end
 
     def usage
+      [usage_args].tap { |lines|
+        doc = doc_lines.join.gsub(/^/, "  ")
+        lines << "" << doc << "" unless doc.strip.empty?
+      } * "\n"
+    end
+
+    def usage_short
+      [usage_args].tap { |parts|
+        doc = (doc_lines[0] || "").strip
+        parts << doc unless doc.empty?
+      } * " · "
+    end
+
+    def usage_args
       args = @meth.parameters.map do |type, name|
         case type
         when :req then name
@@ -86,6 +102,10 @@ class MetaCLI
         end
       end
       [@name, *args].join " "
+    end
+
+    private def doc_lines
+      MethodDoc.get_loc *@meth.source_location
     end
 
     def run(args, opts)
