@@ -1,0 +1,82 @@
+# MetaCLI
+
+> Ruby command-line option parser for the lazy
+
+Allows for defining commands as methods receiving command-line arguments and
+options as positional and keyword arguments, respectively.
+
+Instead of having to explicitly declare available commands and their arguments
+and options, dynamically extrapolates those from regular method definitions.
+Generates concise usage messages upon --help and invalid calls.
+
+Command descriptions may be specified as method documentation.
+
+## Example
+
+```sh
+$ ruby my_script.rb foo bar --baz --qux=123
+```
+
+would call:
+
+```ruby
+my_obj.cmd_foo("bar", baz: true, qux: "123")
+```
+
+## Install
+
+Gemfile:
+
+```ruby
+gem 'metacli', github: 'Roman2K/metacli'
+```
+
+## Usage
+
+```ruby
+<%= chomp File.read "my_script.rb" %>
+```
+
+## Output
+
+Global usage:
+
+```sh
+$ <%= chomp run 0, "-h" %>
+```
+
+Command usage:
+
+```sh
+$ <%= chomp run 0, "hello", "-h" %>
+```
+
+Command usage (with description):
+
+```sh
+$ <%= chomp run 0, "echo", "-h" %>
+```
+
+Successful run:
+
+```sh
+$ <%= chomp run 0, "hello", "Bob" %>
+```
+
+Successful run (with global option):
+
+```sh
+$ <%= chomp run 0, "hello", "Bob", "Sponge", "--verbose" %>
+```
+
+Invalid call (command not specified):
+
+```sh
+$ <%= chomp run 1 %>
+```
+
+Invalid call (missing argument):
+
+```sh
+$ <%= chomp run 1, "hello" %>
+```

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")"
+ruby gen_readme.rb > ../README.md

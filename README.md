@@ -69,7 +69,7 @@ cli.run app
 
 Global usage:
 
-```
+```sh
 $ ruby my_script.rb -h
 Usage: my_script.rb hello|echo [options]
 
@@ -116,16 +116,15 @@ Invalid call (command not specified):
 
 ```sh
 $ ruby my_script.rb
-Traceback (most recent call last):
-        1: from my_script.rb:28:in `<main>'
-/home/roman/code/metacli/lib/metacli.rb:34:in `run': Usage: my_script.rb hello|echo [options] (ArgumentError)
+(metacli)/metacli.rb:36:in `run': Usage: my_script.rb hello|echo [options] (ArgumentError)
+	from my_script.rb:29:in `<main>'
 ```
 
-Invalid call (missing name argument to hello command):
+Invalid call (missing argument):
 
 ```sh
-Traceback (most recent call last):
-        2: from my_script.rb:28:in `<main>'
-        1: from /home/roman/code/metacli/lib/metacli.rb:48:in `run'
-/home/roman/code/metacli/lib/metacli.rb:51:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (ArgumentError)
+$ ruby my_script.rb hello
+(metacli)/metacli.rb:53:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (ArgumentError)
+	from (metacli)/metacli.rb:50:in `run'
+	from my_script.rb:29:in `<main>'
 ```
