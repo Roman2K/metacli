@@ -15,10 +15,10 @@ class MetaCLI
       case arg
       when /\A--(.+)=(.*)\z/
         @opts[$1.to_sym] = $2
-      when /\A--(.+)\z/
-        @opts[$1.to_sym] = true
       when /\A--no-(.+)\z/
         @opts[$1.to_sym] = false
+      when /\A--(.+)\z/
+        @opts[$1.to_sym] = true
       else
         next false
       end
