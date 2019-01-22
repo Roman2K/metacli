@@ -23,6 +23,10 @@ would call:
 my_obj.cmd_foo("bar", baz: true, qux: "123")
 ```
 
+Used in:
+
+* [alerterr](https://github.com/Roman2K/alerterr)
+
 ## Install
 
 Gemfile:
@@ -116,7 +120,7 @@ Invalid call (command not specified):
 
 ```sh
 $ ruby my_script.rb
-(metacli)/metacli.rb:36:in `run': Usage: my_script.rb hello|echo [options] (ArgumentError)
+(metacli)/metacli.rb:37:in `run': Usage: my_script.rb hello|echo [options] (ArgumentError)
 	from my_script.rb:29:in `<main>'
 ```
 
@@ -124,7 +128,7 @@ Invalid call (missing argument):
 
 ```sh
 $ ruby my_script.rb hello
-(metacli)/metacli.rb:53:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (ArgumentError)
-	from (metacli)/metacli.rb:50:in `run'
+(metacli)/metacli.rb:54:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (ArgumentError)
+	from (metacli)/metacli.rb:51:in `run'
 	from my_script.rb:29:in `<main>'
 ```
