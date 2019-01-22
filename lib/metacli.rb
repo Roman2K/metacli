@@ -9,12 +9,14 @@ class MetaCLI
     @cmd, @opt_help = nil, true if @cmd == "help"
   end
 
-  attr_reader :opts
+  attr_reader :cmd, :args, :opts
 
   private def parse_opts!
     @opts = {}
-    @args.delete_if do |arg|
+    @args = @args.each_with_object([]).with_index do |(arg, arr), i|
       case arg
+      when "--"
+        break arr.concat @args[i+1 .. -1]
       when /\A--(.+)=(.*)\z/
         @opts[$1.to_sym] = $2
       when /\A--no-(.+)\z/
@@ -22,9 +24,8 @@ class MetaCLI
       when /\A--(.+)\z/
         @opts[$1.to_sym] = true
       else
-        next false
+        arr << arg
       end
-      true
     end
   end
 
