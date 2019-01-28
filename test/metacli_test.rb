@@ -20,4 +20,24 @@ class MetaCLITest < Minitest::Test
 
     assert_equal %w( a ), MetaCLI.new(%w( mycmd a -- )).args
   end
+
+  module Cmds
+    # Some doc
+    def self.cmd_foo
+    end
+
+    ##
+    # Some doc
+    #
+    def self.cmd_bar
+    end
+  end
+
+  def test_doc_lines
+    lines = -> cmd do
+      MetaCLI::RunObject.new(Cmds)[cmd].doc_lines
+    end
+    assert_equal [" Some doc\n"], lines[:foo]
+    assert_equal [" Some doc\n"], lines[:bar]
+  end
 end

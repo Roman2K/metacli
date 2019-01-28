@@ -80,7 +80,7 @@ class MetaCLI
 
     def usage
       [usage_args].tap { |lines|
-        doc = doc_lines.join.gsub(/^/, "  ")
+        doc = doc_lines.join.gsub(/^ /, "")
         lines << "" << doc << "" unless doc.strip.empty?
       } * "\n"
     end
@@ -105,8 +105,12 @@ class MetaCLI
       [@name, *args].join " "
     end
 
-    private def doc_lines
-      MethodDoc.get_loc *@meth.source_location
+    def doc_lines
+      MethodDoc.get_loc(*@meth.source_location).tap do |lines|
+        lines.shift if lines.first == "#\n"
+        i = lines.reverse_each.each_cons(2).find_index { |ls| ls.any? /\S/ }
+        lines.pop i+1 if i
+      end
     end
 
     def run(args, opts)

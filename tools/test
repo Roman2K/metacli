@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+Dir.glob("test/**/*_test.rb") do |f|
+  load f
+end
