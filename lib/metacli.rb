@@ -98,7 +98,7 @@ class MetaCLI
         when :req then name
         when :opt then "[#{name}]"
         when :rest then "[#{name} ...]"
-        when :key then "--#{name}"
+        when :key then "--[no-]#{name}"
         else "<#{type}:#{name}>"
         end
       end

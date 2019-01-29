@@ -80,7 +80,7 @@ Usage: my_script.rb hello|echo [options]
 Commands:
 
   hello firstname [lastname]
-  echo msg --shout · Prints its argument
+  echo msg --[no-]shout · Prints its argument
 
 ```
 
@@ -95,7 +95,7 @@ Command usage (with description):
 
 ```sh
 $ ruby my_script.rb echo -h
-Usage: my_script.rb echo msg --shout
+Usage: my_script.rb echo msg --[no-]shout
 
 Prints its argument
 
