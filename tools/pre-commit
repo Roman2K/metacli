@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+[ `git ls-files -m README.md | wc -l` -eq 0 ] || {
+  echo README modified by hand >&2
+  exit 1
+}
+tools/gen_readme && git add README.md

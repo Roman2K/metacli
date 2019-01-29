@@ -97,7 +97,7 @@ Command usage (with description):
 $ ruby my_script.rb echo -h
 Usage: my_script.rb echo msg --shout
 
-   Prints its argument
+Prints its argument
 
 ```
 
