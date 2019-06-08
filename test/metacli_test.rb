@@ -5,7 +5,12 @@ require 'metacli'
 
 class MetaCLITest < Minitest::Test
   def test_args_opts
-    args = %w( mycmd a --foo --no-foo --bar b --baz=quux -- --myopt c )
+    args = %w(
+      mycmd a
+        --foo --no-foo --bar b --baz=quux
+        --some_url=http://v.xyz?a=1
+        -- --myopt c
+    )
     args2 = args.dup
 
     cli = MetaCLI.new(args)
@@ -16,6 +21,7 @@ class MetaCLITest < Minitest::Test
       foo: false,
       bar: true,
       baz: "quux",
+      some_url: "http://v.xyz?a=1",
     }, cli.opts)
 
     assert_equal %w( a ), MetaCLI.new(%w( mycmd a -- )).args

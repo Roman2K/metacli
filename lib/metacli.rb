@@ -17,7 +17,7 @@ class MetaCLI
       case arg
       when "--"
         break arr.concat @args[i+1 .. -1]
-      when /\A--(.+)=(.*)\z/
+      when /\A--(.+?)=(.*)\z/
         @opts[$1.to_sym] = $2
       when /\A--no-(.+)\z/
         @opts[$1.to_sym] = false
