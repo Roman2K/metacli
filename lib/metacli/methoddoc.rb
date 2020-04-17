@@ -36,6 +36,7 @@ class MetaCLI::MethodDoc < Ripper::SexpBuilder
     when :program, :@sp, :@ignored_nl
     when :bodystmt, :parse_error
     when :@embdoc_beg, :@embdoc_end
+    when :@nl, :const_ref, :stmts_add   # Ruby v2.7
     when :@embdoc
       @comment << exp[1]
     else

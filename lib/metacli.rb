@@ -116,15 +116,14 @@ class MetaCLI
     def run(args, opts)
       ##
       # We can't just call @meth with *args, **opts because if args contains
-      # less arguments that @meth takes, then opts is passed as one of the
+      # less arguments than @meth takes, then opts is passed as one of the
       # arguments instead of as keyword arguments.
       #
       if !opts.empty? \
         && args.size >= @meth.parameters.count { |type,| type == :req }
-        then
-          args = [*args, opts]
+      then
+        args = [*args, opts]
       end
-
       begin
         @meth.call(*args)
       rescue ArgumentError

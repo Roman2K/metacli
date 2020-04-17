@@ -47,6 +47,16 @@ DDD
       ], MethodDoc.get(SRC)
     end
 
+    SRC2 = <<-RB
+    RB
+
+    def test_get2
+      assert_equal [" some doc\n"], MethodDoc.get(<<-RB)
+class Cmds
+  # some doc
+RB
+    end
+
     # test
     def test_get_loc
       assert_equal [" test\n"],

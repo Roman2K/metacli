@@ -46,4 +46,20 @@ class MetaCLITest < Minitest::Test
     assert_equal [" Some doc\n"], lines[:foo]
     assert_equal [" Some doc\n"], lines[:bar]
   end
+
+  def test_arg_error
+    cmds = Object.new
+    def cmds.cmd_foo; raise_err end
+    def cmds.raise_err; raise ArgumentError end
+
+    err = assert_raises ArgumentError do
+      MetaCLI.new(%w(foo)).run cmds
+    end
+    refute_match /usage:/i, err.message
+
+    err = assert_raises ArgumentError do
+      MetaCLI.new(%w(foo a)).run cmds
+    end
+    assert_match /usage:/i, err.message
+  end
 end
