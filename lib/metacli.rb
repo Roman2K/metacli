@@ -50,8 +50,8 @@ class MetaCLI
 
     begin
       cmd.run(@args, @opts)
-    rescue Command::CommandArgError
-      raise ArgumentError, usage(cmd.usage_args)
+    rescue CommandArgError
+      raise UsageError, usage(cmd.usage_args)
     end
   end
 
@@ -119,19 +119,20 @@ class MetaCLI
       # less arguments than @meth takes, then opts is passed as one of the
       # arguments instead of as keyword arguments.
       #
-      if !opts.empty? \
-        && args.size >= @meth.parameters.count { |type,| type == :req }
-      then
-        args = [*args, opts]
-      end
+      opts = {} if args.size < @meth.parameters.count { |type,| type == :req }
       begin
-        @meth.call(*args)
+        if opts.empty?
+          @meth.call *args
+        else
+          @meth.call *args, **opts
+        end
       rescue ArgumentError
         raise unless $!.backtrace[0] =~ /:in `#{@meth.name}'/
         raise CommandArgError
       end
     end
-
-    class CommandArgError < StandardError; end
   end
+
+  class CommandArgError < StandardError; end
+  class UsageError < ArgumentError; end
 end

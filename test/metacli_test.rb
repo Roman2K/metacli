@@ -55,11 +55,25 @@ class MetaCLITest < Minitest::Test
     err = assert_raises ArgumentError do
       MetaCLI.new(%w(foo)).run cmds
     end
-    refute_match /usage:/i, err.message
+    refute_kind_of MetaCLI::UsageError, err
 
-    err = assert_raises ArgumentError do
+    assert_raises MetaCLI::UsageError do
       MetaCLI.new(%w(foo a)).run cmds
     end
-    assert_match /usage:/i, err.message
+  end
+
+  def test_ruby27_opts
+    cmds = []
+    def cmds.cmd_foo(a, b: 1); push [a,b] end
+
+    cmds.clear
+    MetaCLI.new(%w(foo x --b=2)).run cmds
+    assert_equal ["x", "2"], cmds.last
+
+    cmds.clear
+    assert_raises MetaCLI::UsageError do
+      MetaCLI.new(%w(foo --b=2)).run cmds
+    end
+    assert_nil cmds.last
   end
 end

@@ -128,16 +128,16 @@ Invalid call (missing argument):
 
 ```sh
 $ ruby my_script.rb hello
-(metacli)/metacli.rb:54:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (ArgumentError)
+(metacli)/metacli.rb:54:in `rescue in run': Usage: my_script.rb hello firstname [lastname] (MetaCLI::UsageError)
 	from (metacli)/metacli.rb:51:in `run'
 	from my_script.rb:29:in `<main>'
-(metacli)/metacli.rb:131:in `rescue in run': MetaCLI::Command::CommandArgError (MetaCLI::Command::CommandArgError)
-	from (metacli)/metacli.rb:127:in `run'
+(metacli)/metacli.rb:131:in `rescue in run': MetaCLI::CommandArgError (MetaCLI::CommandArgError)
+	from (metacli)/metacli.rb:123:in `run'
 	from (metacli)/metacli.rb:52:in `run'
 	from my_script.rb:29:in `<main>'
 my_script.rb:8:in `cmd_hello': wrong number of arguments (given 0, expected 1..2) (ArgumentError)
-	from (metacli)/metacli.rb:128:in `call'
-	from (metacli)/metacli.rb:128:in `run'
+	from (metacli)/metacli.rb:125:in `call'
+	from (metacli)/metacli.rb:125:in `run'
 	from (metacli)/metacli.rb:52:in `run'
 	from my_script.rb:29:in `<main>'
 ```
