@@ -3,13 +3,14 @@ class MetaCLI
 
   def initialize(argv, prog: File.basename($0))
     @prog, @args = prog, argv.dup
-    @opt_help = %w(-h --help).map { |o| !!@args.delete(o) }.any?
     parse_opts!
+    @opt_help = [@args.delete("-h"), @opts.delete(:help)].any?
     @cmd = @args.shift
     @cmd, @opt_help = nil, true if @cmd == "help"
   end
 
   attr_reader :cmd, :args, :opts
+  def opt_help?; @opt_help end
 
   private def parse_opts!
     @opts = {}
@@ -127,8 +128,8 @@ class MetaCLI
           @meth.call *args, **opts
         end
       rescue ArgumentError
-        raise unless $!.backtrace[0] =~ /:in `#{@meth.name}'/
-        raise CommandArgError
+        raise CommandArgError if $!.backtrace[0] =~ /:in `#{@meth.name}'/
+        raise
       end
     end
   end

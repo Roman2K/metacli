@@ -27,6 +27,23 @@ class MetaCLITest < Minitest::Test
     assert_equal %w( a ), MetaCLI.new(%w( mycmd a -- )).args
   end
 
+  def test_help
+    cli = MetaCLI.new %w(mycmd a --help)
+    assert_equal %w(a), cli.args
+    assert cli.opts.empty?
+    assert cli.opt_help?
+
+    cli = MetaCLI.new %w(mycmd a -h)
+    assert_equal %w(a), cli.args
+    assert cli.opts.empty?
+    assert cli.opt_help?
+
+    cli = MetaCLI.new %w(mycmd a -- --help)
+    assert_equal %w(a --help), cli.args
+    assert cli.opts.empty?
+    refute cli.opt_help?
+  end
+
   module Cmds
     # Some doc
     def self.cmd_foo
